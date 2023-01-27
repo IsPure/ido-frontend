@@ -10,12 +10,12 @@ import Home from "./pages/home";
 import Login from "./pages/login";
 import Register from "./pages/register";
 
-const PrivateRoute = () => {
+const PrivateRoutes = () => {
   const isAuth = false;
 
   return <>{isAuth ? <Outlet /> : <Navigate to="/login" />}</>;
 };
-const RestrictedRoute = () => {
+const RestrictedRoutes = () => {
   const isAuth = false;
 
   return <>{!isAuth ? <Outlet /> : <Navigate to="/dashboard" />}</>;
