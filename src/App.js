@@ -9,6 +9,7 @@ import Dashboard from "./pages/dashboard";
 import Home from "./pages/home";
 import Login from "./pages/login";
 import Register from "./pages/register";
+import "./App.css";
 
 const PrivateRoutes = () => {
   const isAuth = false;
@@ -26,11 +27,9 @@ const App = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-
         <Route element={<PrivateRoutes />}>
           <Route path="/dashboard" element={<Dashboard />} />
         </Route>
-
         <Route element={<RestrictedRoutes />}>
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
