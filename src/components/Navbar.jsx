@@ -1,13 +1,14 @@
 import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
-  const isAuth = false;
+  const { isAuth } = useSelector((state) => state.auth);
 
   return (
     <div id="mainNavigation">
       <nav role="navigation ">
-        <div className="py-3 text-center border-bottom">
-          <div className="container" style={{ maxWidth: 300 }}>
+        <div className="text-center border-bottom">
+          <div className="container" style={{ maxWidth: 500 }}>
             <img
               src="/images/Stephanie + Isaac-1 copy.png"
               alt=""

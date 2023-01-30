@@ -1,5 +1,7 @@
 import { useState } from "react";
 import Layout from "../components/Layout";
+import { Link } from "react-router-dom";
+import { onRegistration } from "../api/authAPI";
 
 const Register = () => {
   const [values, setValues] = useState({
@@ -9,9 +11,24 @@ const Register = () => {
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  const onChange = () => {};
+  const onChange = (e) => {
+    setValues({ ...values, [e.target.name]: e.target.value });
+  };
 
-  const onSubmit = () => {};
+  const onSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const { data } = await onRegistration(values);
+      setError("");
+      setSuccess(data.message);
+      setValues({ email: "", password: "" });
+    } catch (error) {
+      console.log(error.response.data.errors[0].msg);
+      setError(error.response.data.errors[0].msg);
+      setSuccess("");
+    }
+  };
 
   return (
     <Layout>
@@ -21,106 +38,87 @@ const Register = () => {
             <div className="card text-black" style={{ borderRadius: 25 }}>
               <div className="card-body p-md-5">
                 <div className="row justify-content-center">
-                  <div className="col-md-10 col-lg-6 col-xl-6 order-2 order-lg-1">
+                  <div className="col-md-10 col-lg- col-xl-6 order-2 order-lg-1">
                     <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">
                       Sign up
                     </p>
-                    <form className="mx-1 mx-md-4">
+                    <form
+                      onSubmit={(e) => onSubmit(e)}
+                      className="mx-1 mx-md-4"
+                    >
                       <div className="d-flex flex-row align-items-center mb-4">
                         <i className="fas fa-user fa-lg me-3 fa-fw"></i>
                         <div className="form-outline flex-fill mb-0">
-                          <input
-                            type="text"
-                            id="form3Example1c"
-                            className="form-control"
-                          />
-                          <label
-                            className="form-label"
-                            htmlFor="form3Example1c"
-                          >
-                            Your Name
-                          </label>
+                          <div className="form-floating mb-3">
+                            <input
+                              onChange={(e) => onChange(e)}
+                              type="email"
+                              id="email"
+                              name="email"
+                              value={values.email}
+                              className="form-control"
+                              placeholder="Email"
+                              required
+                            />
+                            <label className="form-label" htmlFor="email">
+                              Email
+                            </label>
+                          </div>
                         </div>
                       </div>
-
                       <div className="d-flex flex-row align-items-center mb-4">
                         <i className="fas fa-envelope fa-lg me-3 fa-fw"></i>
                         <div className="form-outline flex-fill mb-0">
-                          <input
-                            type="email"
-                            id="form3Example3c"
-                            className="form-control"
-                          />
-                          <label
-                            className="form-label"
-                            htmlFor="form3Example3c"
-                          >
-                            Your Email
-                          </label>
+                          <div className="form-floating mb-3">
+                            <input
+                              onChange={(e) => onChange(e)}
+                              value={values.password}
+                              type="password"
+                              id="password"
+                              className="form-control"
+                              placeholder="Password"
+                              name="password"
+                              required
+                            />
+                            <label className="form-label" htmlFor="password">
+                              Password
+                            </label>
+                          </div>
                         </div>
                       </div>
-
-                      <div className="d-flex flex-row align-items-center mb-4">
-                        <i className="fas fa-lock fa-lg me-3 fa-fw"></i>
-                        <div className="form-outline flex-fill mb-0">
-                          <input
-                            type="password"
-                            id="form3Example4c"
-                            className="form-control"
-                          />
-                          <label
-                            className="form-label"
-                            htmlFor="form3Example4c"
-                          >
-                            Password
-                          </label>
-                        </div>
+                      {/* error div */}
+                      <div
+                        className="text-center ms-2 my-3"
+                        style={{ color: "red" }}
+                      >
+                        {error}
                       </div>
-
-                      <div className="d-flex flex-row align-items-center mb-4">
-                        <i className="fas fa-key fa-lg me-3 fa-fw"></i>
-                        <div className="form-outline flex-fill mb-0">
-                          <input
-                            type="password"
-                            id="form3Example4cd"
-                            className="form-control"
-                          />
-                          <label
-                            className="form-label"
-                            htmlFor="form3Example4cd"
-                          >
-                            Repeat your password
-                          </label>
-                        </div>
-                      </div>
-
-                      <div className="form-check d-flex justify-content-center mb-5">
-                        <input
-                          className="form-check-input me-2"
-                          type="checkbox"
-                          value=""
-                          id="form2Example3c"
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor="form2Example3"
-                        >
-                          I agree all statements in{" "}
-                          <a href="#!">Terms of service</a>
-                        </label>
+                      <div
+                        className="text-center ms-2 my-3"
+                        style={{ color: "green" }}
+                      >
+                        {success}
                       </div>
 
                       <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                         <button
-                          type="button"
-                          className="btn btn-primary btn-lg"
+                          type="submit"
+                          className="btn btn-primary btn-lg mx-4"
                         >
                           Register
                         </button>
+                        <Link to="/login">
+                          <button
+                            type="button"
+                            className="btn btn-light btn-lg mx-4 border"
+                          >
+                            Sign In
+                          </button>
+                        </Link>
                       </div>
                     </form>
                   </div>
-                  <div className="col-md-10 col-lg-6 col-xl-6 d-flex align-items-center order-1 order-lg-2">
+                  <div className="col-md-6 col-lg-6 col-xl-6 d-flex align-items-center order-1 order-lg-2 d-none d-lg-block">
                     <div>
                       <img
                         src="https://images.unsplash.com/photo-1569264630284-770de3d5935d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80"

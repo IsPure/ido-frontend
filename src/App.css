@@ -36,7 +36,7 @@ a.dropdown-item:hover {
   left: 0;
   width: 100%;
   z-index: 123;
-  padding-bottom: 120px;
+  padding-bottom: 5rem;
   /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#000000+0,000000+100&0.65+0,0+100;Neutral+Density */
   background: -moz-linear-gradient(
     top,
