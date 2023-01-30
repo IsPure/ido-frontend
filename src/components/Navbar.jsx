@@ -7,7 +7,7 @@ const Navbar = () => {
     <div id="mainNavigation">
       <nav role="navigation ">
         <div className="py-3 text-center border-bottom">
-          <div className="container" style={{ "max-width": 500 }}>
+          <div className="container" style={{ maxWidth: 300 }}>
             <img
               src="/images/Stephanie + Isaac-1 copy.png"
               alt=""
