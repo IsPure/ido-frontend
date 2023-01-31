@@ -20,7 +20,7 @@ const Navbar = () => {
       <div className="navbar-expand-md">
         <div className="navbar-dark text-center my-2">
           <button
-            className="navbar-toggler w-75"
+            className="navbar-toggler w-75 border border-light"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#navbarNavDropdown"
