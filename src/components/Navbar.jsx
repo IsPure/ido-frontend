@@ -63,6 +63,13 @@ const Navbar = () => {
                     </a>
                   </NavLink>
                 </li>
+                <li className="nav-item">
+                  <NavLink to="/logout">
+                    <a className="nav-link" href="#">
+                      Logout
+                    </a>
+                  </NavLink>
+                </li>
               </>
             ) : (
               <>
