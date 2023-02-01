@@ -98,14 +98,14 @@ const Login = () => {
                           type="submit"
                           className="btn btn-primary btn-lg mx-4"
                         >
-                          Register
+                          Login
                         </button>
-                        <Link to="/login">
+                        <Link to="/register">
                           <button
                             type="button"
                             className="btn btn-light btn-lg mx-4 border"
                           >
-                            Sign In
+                            Register
                           </button>
                         </Link>
                       </div>
