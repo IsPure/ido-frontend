@@ -9,7 +9,7 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [protectedData, setProtectedData] = useState(null);
 
-  const logout = async () => {
+  const LoggingOut = async () => {
     try {
       await logOut();
 
@@ -28,7 +28,7 @@ const Dashboard = () => {
 
       setLoading(false);
     } catch (error) {
-      logout();
+      LoggingOut();
     }
   };
 
@@ -46,7 +46,7 @@ const Dashboard = () => {
         <h1>Dashboard</h1>
         <h2>{protectedData}</h2>
 
-        <button onClick={() => logout()} className="btn btn-primary">
+        <button onClick={() => LoggingOut()} className="btn btn-primary">
           Logout
         </button>
       </Layout>
