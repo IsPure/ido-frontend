@@ -3,11 +3,14 @@ import { useDispatch } from "react-redux";
 import { fetchProtectedData, logOut } from "../api/authAPI";
 import Layout from "../components/Layout";
 import { unauthenticateUser } from "../redux/slices/authSlice";
+import ListGuests from "../components/dashboard/guestlist/ListGuests";
+import InputGuest from "../components/dashboard/guestlist/InputGuest";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
-  const [protectedData, setProtectedData] = useState(null);
+  const [allGuests, setAllGuests] = useState([]);
+  const [guestChange, setGuestChange] = useState(false);
 
   const LoggingOut = async () => {
     try {
@@ -24,17 +27,19 @@ const Dashboard = () => {
     try {
       const { data } = await fetchProtectedData();
 
-      setProtectedData(data.info);
+      setAllGuests(data.info);
 
       setLoading(false);
     } catch (error) {
+      console.log(error.response);
       LoggingOut();
     }
   };
 
   useEffect(() => {
     protectedInfo();
-  }, []);
+    setGuestChange(false);
+  }, [guestChange]);
 
   return loading ? (
     <Layout>
@@ -44,7 +49,14 @@ const Dashboard = () => {
     <div>
       <Layout>
         <h1>Dashboard</h1>
-        <h2>{protectedData}</h2>
+        <div>
+          <div className="d-flex mt-5 justify-content-around">
+            <h2>My Guest List</h2>
+          </div>
+
+          <InputGuest setGuestChange={setGuestChange} />
+          <ListGuests allGuests={allGuests} setGuestChange={setGuestChange} />
+        </div>
 
         <button onClick={() => LoggingOut()} className="btn btn-primary">
           Logout
