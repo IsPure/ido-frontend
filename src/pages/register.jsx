@@ -24,8 +24,8 @@ const Register = () => {
       setSuccess(data.message);
       setValues({ email: "", password: "" });
     } catch (error) {
-      console.log(error.response.data.errors[0].msg);
-      setError(error.response.data.errors[0].msg);
+      console.log(error.message);
+      setError(error.message);
       setSuccess("");
     }
   };

@@ -52,10 +52,8 @@ const Navbar = () => {
         >
           <ul className="navbar-nav mx-auto ">
             <li className="nav-item">
-              <NavLink to={"/"}>
-                <a className="nav-link active" aria-current="page" href="#">
-                  Home
-                </a>
+              <NavLink to="/" className="nav-link active" aria-current="page">
+                Home
               </NavLink>
             </li>
             <li className="nav-item">
@@ -71,10 +69,8 @@ const Navbar = () => {
             {isAuth ? (
               <>
                 <li className="nav-item">
-                  <NavLink to="/dashboard">
-                    <a className="nav-link" href="#">
-                      Dashboard
-                    </a>
+                  <NavLink to="/dashboard" className="nav-link">
+                    Dashboard
                   </NavLink>
                 </li>
                 <li className="nav-item">
@@ -92,17 +88,13 @@ const Navbar = () => {
             ) : (
               <>
                 <li className="nav-item">
-                  <NavLink to="/login">
-                    <a className="nav-link" href="#">
-                      Login
-                    </a>
+                  <NavLink to="/login" className="nav-link">
+                    Login
                   </NavLink>
                 </li>
                 <li className="nav-item">
-                  <NavLink to="/register">
-                    <a className="nav-link" href="#">
-                      Register
-                    </a>
+                  <NavLink to="/register" className="nav-link">
+                    Register
                   </NavLink>
                 </li>
               </>

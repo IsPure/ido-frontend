@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { fetchProtectedData, logOut } from "../api/authAPI";
+import { fetchAllGuests, fetchMyGuests, logOut } from "../api/authAPI";
 import Layout from "../components/Layout";
 import { unauthenticateUser } from "../redux/slices/authSlice";
-import ListGuests from "../components/dashboard/guestlist/ListGuests";
+import ListGuest from "../components/dashboard/guestlist/ListGuests";
 import InputGuest from "../components/dashboard/guestlist/InputGuest";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   const [allGuests, setAllGuests] = useState([]);
+  const [myGuests, setMyGuests] = useState([]);
   const [guestChange, setGuestChange] = useState(false);
 
   const LoggingOut = async () => {
@@ -25,21 +26,32 @@ const Dashboard = () => {
 
   const protectedInfo = async () => {
     try {
-      const { data } = await fetchProtectedData();
-
-      setAllGuests(data.info);
-
+      const { data } = await fetchMyGuests();
+      setMyGuests(data);
       setLoading(false);
+      console.log(myGuests);
     } catch (error) {
       console.log(error.response);
       LoggingOut();
     }
   };
+  // const allUserLists = async () => {
+  //   try {
+  //     const { data } = await fetchAllGuests();
+
+  //     setMyGuests(data);
+  //     setLoading(false);
+  //   } catch (error) {
+  //     console.log(error.response);
+  //     LoggingOut();
+  //   }
+  // };
 
   useEffect(() => {
     protectedInfo();
-    setGuestChange(false);
-  }, [guestChange]);
+    // allUserLists();
+    console.log(myGuests);
+  }, [guestChange, myGuests]);
 
   return loading ? (
     <Layout>
@@ -53,9 +65,12 @@ const Dashboard = () => {
           <div className="d-flex mt-5 justify-content-around">
             <h2>My Guest List</h2>
           </div>
-
           <InputGuest setGuestChange={setGuestChange} />
-          <ListGuests allGuests={allGuests} setGuestChange={setGuestChange} />
+          <ListGuest
+            allGuests={allGuests}
+            myGuests={myGuests}
+            setGuestChange={setGuestChange}
+          />
         </div>
 
         <button onClick={() => LoggingOut()} className="btn btn-primary">

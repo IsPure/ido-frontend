@@ -1,49 +1,62 @@
-// import React, { useState } from "react";
+import { useState } from "react";
+import { createGuest } from "../../../api/authAPI";
+import { authenticateUser } from "../../../redux/slices/authSlice";
 
-// const InputGuest = ({ setTodosChange }) => {
-//   const [name, setName] = useState("");
+const InputGuest = ({ setGuestChange }) => {
+  const [newGuest, setNewGuest] = useState({
+    name: "",
+    numGuest: "",
+  });
 
-//   const onSubmitForm = async (e) => {
-//     e.preventDefault();
-//     try {
-//       const myHeaders = new Headers();
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    if (!newGuest.name) {
+      // Display an error message or handle the error in some other way
+      console.log("Guest name is required");
+      return;
+    }
+    if (!newGuest.numGuest) {
+      // Display an error message or handle the error in some other way
+      console.log("Number of guests is required");
+      return;
+    }
+    try {
+      const data = newGuest;
+      console.log(data);
+      console.log(newGuest);
+      await authenticateUser(); // send the authentication token to the server
+      const response = await createGuest(data);
+      // console.log(response);
+      setGuestChange(true); // update the state to re-render the component
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
-//       myHeaders.append("Content-Type", "application/json");
-//       myHeaders.append("jwt_token", localStorage.token);
+  return (
+    <>
+      <h1 className="text-center my-5">Add Guest</h1>
+      <form className="d-flex" onSubmit={onSubmit}>
+        <input
+          type="text"
+          placeholder="Input name of guest/family"
+          className="form-control"
+          value={newGuest.name}
+          onChange={(e) => setNewGuest({ ...newGuest, name: e.target.value })}
+        />
+        <input
+          type="number"
+          placeholder="Input number of guests"
+          className="form-control"
+          value={newGuest.numGuest}
+          onChange={(e) =>
+            setNewGuest({ ...newGuest, numGuest: e.target.value })
+          }
+        />
+        <button className="btn btn-success">Add</button>
+      </form>
+    </>
+  );
+};
 
-//       const body = { name };
-//       const response = await fetch("http://localhost:5000/api/addGuest", {
-//         method: "POST",
-//         headers: myHeaders,
-//         body: JSON.stringify(body),
-//       });
-
-//       const parseResponse = await response.json();
-
-//       console.log(parseResponse);
-
-//       setTodosChange(true);
-//       setDescription("");
-//       // window.location = "/";
-//     } catch (err) {
-//       console.error(err.message);
-//     }
-//   };
-//   return (
-//     <>
-//       <h1 className="text-center my-5">Input Todo</h1>
-//       <form className="d-flex" onSubmit={onSubmitForm}>
-//         <input
-//           type="text"
-//           placeholder="add todo"
-//           className="form-control"
-//           value={description}
-//           onChange={(e) => setDescription(e.target.value)}
-//         />
-//         <button className="btn btn-success ">Add</button>
-//       </form>
-//     </>
-//   );
-// };
-
-// export default InputTodo;
+export default InputGuest;

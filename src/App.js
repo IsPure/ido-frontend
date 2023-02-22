@@ -12,18 +12,17 @@ import Register from "./pages/register";
 import "./App.css";
 import { useSelector } from "react-redux";
 
-const PrivateRoutes = () => {
-  const { isAuth } = useSelector((state) => state.auth);
-
-  return <>{isAuth ? <Outlet /> : <Navigate to="/login" />}</>;
-};
-const RestrictedRoutes = () => {
-  const { isAuth } = useSelector((state) => state.auth);
-
-  return <>{!isAuth ? <Outlet /> : <Navigate to="/dashboard" />}</>;
-};
-
 const App = () => {
+  const PrivateRoutes = () => {
+    const { isAuth } = useSelector((state) => state.auth);
+
+    return <>{isAuth ? <Outlet /> : <Navigate to="/login" />}</>;
+  };
+  const RestrictedRoutes = () => {
+    const { isAuth } = useSelector((state) => state.auth);
+
+    return <>{!isAuth ? <Outlet /> : <Navigate to="/dashboard" />}</>;
+  };
   return (
     <BrowserRouter>
       <Routes>
