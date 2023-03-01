@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { createGuest } from "../../../api/authAPI";
 import { authenticateUser } from "../../../redux/slices/authSlice";
 
-const InputGuest = ({ setGuestChange }) => {
+const InputGuest = ({ guestChange, setGuestChange }) => {
   const [newGuest, setNewGuest] = useState({
     name: "",
     numGuest: "",
@@ -27,11 +27,16 @@ const InputGuest = ({ setGuestChange }) => {
       await authenticateUser(); // send the authentication token to the server
       const response = await createGuest(data);
       // console.log(response);
-      setGuestChange(true); // update the state to re-render the component
+      setGuestChange(!guestChange); // update the state to re-render the component
+      setNewGuest({ name: "", numGuest: "" }); // reset the form
     } catch (error) {
       console.log(error.message);
     }
   };
+
+  useEffect(() => {
+    // fetch the updated list of guests here
+  }, [guestChange]);
 
   return (
     <>

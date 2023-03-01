@@ -22,8 +22,8 @@ export async function fetchAllGuests() {
 export async function fetchMyGuests() {
   return await axios.get("http://localhost:8000/api/my-guests");
 }
-export async function updateGuest(id) {
-  return await axios.put(`http://localhost:8000/api/guest/${id}`);
+export async function updateGuest(id, data) {
+  return await axios.put(`http://localhost:8000/api/guest/${id}`, data);
 }
 export async function createGuest(data) {
   return await axios.post("http://localhost:8000/api/protected", data);

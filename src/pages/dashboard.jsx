@@ -29,50 +29,48 @@ const Dashboard = () => {
       const { data } = await fetchMyGuests();
       setMyGuests(data);
       setLoading(false);
-      console.log(myGuests);
     } catch (error) {
       console.log(error.response);
       LoggingOut();
     }
   };
-  // const allUserLists = async () => {
-  //   try {
-  //     const { data } = await fetchAllGuests();
-
-  //     setMyGuests(data);
-  //     setLoading(false);
-  //   } catch (error) {
-  //     console.log(error.response);
-  //     LoggingOut();
-  //   }
-  // };
-
+  const allUserLists = async () => {
+    try {
+      const { data } = await fetchAllGuests();
+      data.sort((a, b) => a.guest_name.localeCompare(b.guest_name));
+      setAllGuests(data);
+      setLoading(false);
+    } catch (error) {
+      console.log(error.response);
+      LoggingOut();
+    }
+  };
   useEffect(() => {
-    protectedInfo();
-    // allUserLists();
-    console.log(myGuests);
-  }, [guestChange, myGuests]);
+    allUserLists();
+  }, [guestChange]);
 
   return loading ? (
     <Layout>
-      <h1>Loading...</h1>
+      <h1>Loading...</h1>13
     </Layout>
   ) : (
     <div>
       <Layout>
-        <h1>Dashboard</h1>
         <div>
+          <InputGuest
+            guestChange={guestChange}
+            setGuestChange={setGuestChange}
+          />
           <div className="d-flex mt-5 justify-content-around">
             <h2>My Guest List</h2>
           </div>
-          <InputGuest setGuestChange={setGuestChange} />
           <ListGuest
+            guestChange={guestChange}
             allGuests={allGuests}
             myGuests={myGuests}
             setGuestChange={setGuestChange}
           />
         </div>
-
         <button onClick={() => LoggingOut()} className="btn btn-primary">
           Logout
         </button>

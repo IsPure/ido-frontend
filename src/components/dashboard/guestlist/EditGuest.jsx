@@ -1,94 +1,159 @@
-// import React, { Fragment, useState } from "react";
+import { useState } from "react";
+import { updateGuest } from "../../../api/authAPI";
 
-// const EditTodo = ({ todo, setTodosChange }) => {
-//   //editText function
+const EditGuest = ({ guest, setGuestChange, guestChange }) => {
+  const [updatedGuest, setUpdatedGuest] = useState({
+    name: guest.guest_name,
+    numGuest: guest.guest_number,
+    address: guest.address,
+    rsvpStatus: guest.rsvp_status,
+    inviteStatus: guest.invite_sent,
+    stdStatus: guest.std_status,
+  });
 
-//   const editText = async id => {
-//     try {
-//       const body = { description };
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const updatedGuestData = await updateGuest(guest.guest_id, updatedGuest);
+      setGuestChange(!guestChange); // update the state to re-render the component
+      setUpdatedGuest(updatedGuestData);
+    } catch (error) {
+      console.log(error.message);
+    }
+    console.log(updateGuest);
+  };
+  return (
+    <>
+      <button
+        type="button"
+        className="btn btn-warning"
+        data-bs-toggle="modal"
+        data-bs-target={`#id${guest.guest_id}`}
+      >
+        Edit
+      </button>
+      <div
+        className="modal fade"
+        id={`id${guest.guest_id}`}
+        tabIndex="-1"
+        aria-labelledby={`id${guest.guest_id}`}
+        aria-hidden="true"
+      >
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h4 className="modal-title">Edit Guest</h4>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
 
-//       const myHeaders = new Headers();
+            <form onSubmit={onSubmit}>
+              <div className="modal-body">
+                <div className="mb-3">
+                  <label
+                    htmlFor={`name${guest.guest_id}`}
+                    className="form-label"
+                  >
+                    Name
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id={`name${guest.guest_id}`}
+                    value={updatedGuest.name}
+                    onChange={(e) =>
+                      setUpdatedGuest({ ...updatedGuest, name: e.target.value })
+                    }
+                  />
+                </div>
+                <div className="mb-3">
+                  <label
+                    htmlFor={`numGuest${guest.guest_id}`}
+                    className="form-label"
+                  >
+                    Number of Guests
+                  </label>
+                  <input
+                    type="number"
+                    className="form-control"
+                    id={`numGuest${guest.guest_id}`}
+                    value={updatedGuest.numGuest}
+                    onChange={(e) =>
+                      setUpdatedGuest({
+                        ...updatedGuest,
+                        numGuest: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+                <div className="mb-3">
+                  <label
+                    htmlFor={`address${guest.guest_id}`}
+                    className="form-label"
+                  >
+                    Address
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id={`address${guest.guest_id}`}
+                    value={updatedGuest.address}
+                    onChange={(e) =>
+                      setUpdatedGuest({
+                        ...updatedGuest,
+                        address: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+                <div className="mb-3">
+                  <label
+                    htmlFor={`rsvp${guest.guest_id}`}
+                    className="form-label"
+                  >
+                    RSVP Status
+                  </label>
+                  <input
+                    type="checkbox"
+                    className="form-check-input"
+                    id={`rsvp${guest.guest_id}`}
+                    checked={updatedGuest.rsvpStatus}
+                    onChange={(e) =>
+                      setUpdatedGuest({
+                        ...updatedGuest,
+                        rsvpStatus: e.target.checked,
+                      })
+                    }
+                  />
+                </div>
+              </div>
 
-//       myHeaders.append("Content-Type", "application/json");
-//       myHeaders.append("jwt_token", localStorage.token);
+              <div className="modal-footer">
+                <button
+                  data-bs-dismiss="modal"
+                  type="submit"
+                  className="btn btn-warning"
+                >
+                  Update
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
 
-//       await fetch(`http://localhost:5000/dashboard/todos/${id}`, {
-//         method: "PUT",
-//         headers: myHeaders,
-//         body: JSON.stringify(body)
-//       });
-
-//       setTodosChange(true);
-
-//       // window.location = "/";
-//     } catch (err) {
-//       console.error(err.message);
-//     }
-//   };
-
-//   const [description, setDescription] = useState(todo.description);
-//   return (
-//     <Fragment>
-//       <button
-//         type="button"
-//         className="btn btn-warning"
-//         data-toggle="modal"
-//         data-target={`#id${todo.todo_id}`}
-//       >
-//         Edit
-//       </button>
-//       {/* id = "id21"*/}
-//       <div
-//         className="modal"
-//         id={`id${todo.todo_id}`}
-//         onClick={() => setDescription(todo.description)}
-//       >
-//         <div className="modal-dialog">
-//           <div className="modal-content">
-//             <div className="modal-header">
-//               <h4 className="modal-title">Edit Todo</h4>
-//               <button
-//                 type="button"
-//                 className="close"
-//                 data-dismiss="modal"
-//                 onClick={() => setDescription(todo.description)}
-//               >
-//                 &times;
-//               </button>
-//             </div>
-
-//             <div className="modal-body">
-//               <input
-//                 type="text"
-//                 className="form-control"
-//                 value={description}
-//                 onChange={e => setDescription(e.target.value)}
-//               />
-//             </div>
-
-//             <div className="modal-footer">
-//               <button
-//                 type="button"
-//                 className="btn btn-warning"
-//                 data-dismiss="modal"
-//                 onClick={() => editText(todo.todo_id)}
-//               >
-//                 Edit
-//               </button>
-//               <button
-//                 type="button"
-//                 className="btn btn-danger"
-//                 data-dismiss="modal"
-//                 onClick={() => setDescription(todo.description)}
-//               >
-//                 Close
-//               </button>
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//     </Fragment>
-//   );
-// };
-
-// export default EditTodo;
+export default EditGuest;
