@@ -12,6 +12,9 @@ const Dashboard = () => {
   const [allGuests, setAllGuests] = useState([]);
   const [myGuests, setMyGuests] = useState([]);
   const [guestChange, setGuestChange] = useState(false);
+  const [currentEmail, setCurrentEmail] = useState("");
+  const [totalGuests, setTotalGuests] = useState(0);
+  const [myTotalGuests, setMyTotalGuests] = useState(0);
 
   const LoggingOut = async () => {
     try {
@@ -28,6 +31,7 @@ const Dashboard = () => {
     try {
       const { data } = await fetchMyGuests();
       setMyGuests(data);
+      setCurrentEmail(data[0].user_email);
       setLoading(false);
     } catch (error) {
       console.log(error.response);
@@ -39,13 +43,25 @@ const Dashboard = () => {
       const { data } = await fetchAllGuests();
       data.sort((a, b) => a.guest_name.localeCompare(b.guest_name));
       setAllGuests(data);
+      const total = data.reduce((acc, guest) => acc + guest.guest_number, 0);
+      setTotalGuests(total);
+      const myGuestTotal = data
+        .filter((guest) => guest.user_email === currentEmail)
+        .reduce((acc, guest) => acc + guest.guest_number, 0);
+      setMyTotalGuests(myGuestTotal);
+
       setLoading(false);
     } catch (error) {
       console.log(error.response);
       LoggingOut();
     }
   };
+
+  const adminEmails = ["stephanie.chinapen@gmail.com", "isaacpure@gmail.com"];
+  const adminUser = adminEmails.includes(currentEmail);
+
   useEffect(() => {
+    protectedInfo();
     allUserLists();
   }, [guestChange]);
 
@@ -62,14 +78,20 @@ const Dashboard = () => {
             setGuestChange={setGuestChange}
           />
           <div className="d-flex mt-5 justify-content-around">
-            <h2>My Guest List</h2>
+            {adminUser ? <h2>My Guest List</h2> : <h2>All Guests List</h2>}
           </div>
           <ListGuest
             guestChange={guestChange}
             allGuests={allGuests}
             myGuests={myGuests}
             setGuestChange={setGuestChange}
+            currentEmail={currentEmail}
           />
+        </div>
+
+        <div className="d-flex justify-content-between mt-3">
+          {adminUser ? <div>Total Guests: {totalGuests}</div> : null}
+          <div>{currentEmail && `Your Guests: ${myTotalGuests}`}</div>
         </div>
         <button onClick={() => LoggingOut()} className="btn btn-primary">
           Logout

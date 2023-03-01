@@ -2,11 +2,21 @@ import { useState, useEffect } from "react";
 import EditGuest from "./EditGuest";
 import { deleteGuest } from "../../../api/authAPI";
 
-const ListGuest = ({ allGuests, setGuestChange, guestChange }) => {
+const ListGuest = ({
+  allGuests,
+  setGuestChange,
+  guestChange,
+  currentEmail,
+  myGuests,
+}) => {
   const sortedGuests = allGuests.sort((a, b) =>
     a.user_email.localeCompare(b.user_email)
   );
+  const showAllGuests =
+    currentEmail === "stephanie.chinapen@gmail.com" ||
+    currentEmail === "isaacpure@gmail.com";
 
+  const guestList = showAllGuests ? allGuests : myGuests;
   return (
     <>
       <div className="table-responsive">
@@ -25,7 +35,7 @@ const ListGuest = ({ allGuests, setGuestChange, guestChange }) => {
             </tr>
           </thead>
           <tbody>
-            {allGuests.map((guest) => (
+            {guestList.map((guest) => (
               <tr key={guest.guest_id}>
                 <td>{guest.guest_name}</td>
                 <td>{guest.guest_number}</td>
