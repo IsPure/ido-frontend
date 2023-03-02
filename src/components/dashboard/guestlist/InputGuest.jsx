@@ -41,24 +41,33 @@ const InputGuest = ({ guestChange, setGuestChange }) => {
   return (
     <>
       <h1 className="text-center my-5">Add Guest</h1>
-      <form className="d-flex" onSubmit={onSubmit}>
-        <input
-          type="text"
-          placeholder="Input name of guest/family"
-          className="form-control"
-          value={newGuest.name}
-          onChange={(e) => setNewGuest({ ...newGuest, name: e.target.value })}
-        />
-        <input
-          type="number"
-          placeholder="Input number of guests"
-          className="form-control"
-          value={newGuest.numGuest}
-          onChange={(e) =>
-            setNewGuest({ ...newGuest, numGuest: e.target.value })
-          }
-        />
-        <button className="btn btn-success">Add</button>
+      <form
+        className="row g-3 d-flex justify-content-center"
+        onSubmit={onSubmit}
+      >
+        <div className="col-4">
+          <input
+            type="text"
+            placeholder="Input name of guest/family"
+            className="form-control"
+            value={newGuest.name}
+            onChange={(e) => setNewGuest({ ...newGuest, name: e.target.value })}
+          />
+        </div>
+        <div className="col-4">
+          <input
+            type="number"
+            placeholder="Input number of guests"
+            className="form-control"
+            value={newGuest.numGuest}
+            onChange={(e) =>
+              setNewGuest({ ...newGuest, numGuest: e.target.value })
+            }
+          />
+        </div>
+        <div className="col-auto">
+          <button className="btn btn-success">Add</button>
+        </div>
       </form>
     </>
   );

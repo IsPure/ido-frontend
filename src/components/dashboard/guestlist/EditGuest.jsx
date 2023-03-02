@@ -66,7 +66,10 @@ const EditGuest = ({ guest, setGuestChange, guestChange }) => {
                     id={`name${guest.guest_id}`}
                     value={updatedGuest.name}
                     onChange={(e) =>
-                      setUpdatedGuest({ ...updatedGuest, name: e.target.value })
+                      setUpdatedGuest((prevState) => ({
+                        ...prevState,
+                        name: e.target.value,
+                      }))
                     }
                   />
                 </div>
@@ -83,10 +86,10 @@ const EditGuest = ({ guest, setGuestChange, guestChange }) => {
                     id={`numGuest${guest.guest_id}`}
                     value={updatedGuest.numGuest}
                     onChange={(e) =>
-                      setUpdatedGuest({
-                        ...updatedGuest,
+                      setUpdatedGuest((prevState) => ({
+                        ...prevState,
                         numGuest: e.target.value,
-                      })
+                      }))
                     }
                   />
                 </div>
@@ -103,10 +106,50 @@ const EditGuest = ({ guest, setGuestChange, guestChange }) => {
                     id={`address${guest.guest_id}`}
                     value={updatedGuest.address}
                     onChange={(e) =>
-                      setUpdatedGuest({
-                        ...updatedGuest,
+                      setUpdatedGuest((prevState) => ({
+                        ...prevState,
                         address: e.target.value,
-                      })
+                      }))
+                    }
+                  />
+                </div>
+                <div className="mb-3">
+                  <label
+                    htmlFor={`std${guest.guest_id}`}
+                    className="form-label"
+                  >
+                    STD Status
+                  </label>
+                  <input
+                    type="checkbox"
+                    className="form-check-input"
+                    id={`std${guest.guest_id}`}
+                    checked={updatedGuest.stdStatus}
+                    onChange={(e) =>
+                      setUpdatedGuest((prevState) => ({
+                        ...prevState,
+                        stdStatus: e.target.checked ? true : false,
+                      }))
+                    }
+                  />
+                </div>
+                <div className="mb-3">
+                  <label
+                    htmlFor={`invite${guest.guest_id}`}
+                    className="form-label"
+                  >
+                    Invite Sent
+                  </label>
+                  <input
+                    type="checkbox"
+                    className="form-check-input"
+                    id={`invite${guest.guest_id}`}
+                    checked={updatedGuest.inviteStatus}
+                    onChange={(e) =>
+                      setUpdatedGuest((prevState) => ({
+                        ...prevState,
+                        inviteStatus: e.target.checked ? true : false,
+                      }))
                     }
                   />
                 </div>
@@ -123,10 +166,10 @@ const EditGuest = ({ guest, setGuestChange, guestChange }) => {
                     id={`rsvp${guest.guest_id}`}
                     checked={updatedGuest.rsvpStatus}
                     onChange={(e) =>
-                      setUpdatedGuest({
-                        ...updatedGuest,
-                        rsvpStatus: e.target.checked,
-                      })
+                      setUpdatedGuest((prevState) => ({
+                        ...prevState,
+                        rsvpStatus: e.target.checked ? true : false,
+                      }))
                     }
                   />
                 </div>
