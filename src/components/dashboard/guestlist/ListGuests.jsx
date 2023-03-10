@@ -16,7 +16,7 @@ const ListGuest = ({
     currentEmail === "stephanie.chinapen@gmail.com" ||
     currentEmail === "isaacpure@gmail.com";
 
-  const guestList = showAllGuests ? allGuests : myGuests;
+  const guestList = showAllGuests ? sortedGuests : myGuests;
   return (
     <>
       <div className="table-responsive">

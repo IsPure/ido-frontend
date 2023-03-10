@@ -3,25 +3,26 @@ import { updateGuest } from "../../../api/authAPI";
 
 const EditGuest = ({ guest, setGuestChange, guestChange }) => {
   const [updatedGuest, setUpdatedGuest] = useState({
+    guest_id: guest.guest_id,
     name: guest.guest_name,
     numGuest: guest.guest_number,
     address: guest.address,
     rsvpStatus: guest.rsvp_status,
     inviteStatus: guest.invite_sent,
-    stdStatus: guest.std_status,
+    stdStatus: guest.std_sent,
   });
 
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
       const updatedGuestData = await updateGuest(guest.guest_id, updatedGuest);
-      setGuestChange(!guestChange); // update the state to re-render the component
-      setUpdatedGuest(updatedGuestData);
+      setGuestChange((prev) => !prev); // toggle the value of guestChange
+      // rest of the code
     } catch (error) {
-      console.log(error.message);
+      console.log(error.response);
     }
-    console.log(updateGuest);
   };
+
   return (
     <>
       <button
@@ -125,12 +126,13 @@ const EditGuest = ({ guest, setGuestChange, guestChange }) => {
                     className="form-check-input"
                     id={`std${guest.guest_id}`}
                     checked={updatedGuest.stdStatus}
-                    onChange={(e) =>
+                    onChange={(e) => {
+                      console.log(e.target.checked);
                       setUpdatedGuest((prevState) => ({
                         ...prevState,
                         stdStatus: e.target.checked ? true : false,
-                      }))
-                    }
+                      }));
+                    }}
                   />
                 </div>
                 <div className="mb-3">

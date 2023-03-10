@@ -22,8 +22,8 @@ const InputGuest = ({ guestChange, setGuestChange }) => {
     }
     try {
       const data = newGuest;
-      console.log(data);
-      console.log(newGuest);
+      // console.log(data);
+      // console.log(newGuest);
       await authenticateUser(); // send the authentication token to the server
       const response = await createGuest(data);
       // console.log(response);

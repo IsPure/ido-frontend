@@ -38,32 +38,39 @@ const Dashboard = () => {
       LoggingOut();
     }
   };
-  const allUserLists = async () => {
-    try {
-      const { data } = await fetchAllGuests();
-      data.sort((a, b) => a.guest_name.localeCompare(b.guest_name));
-      setAllGuests(data);
-      const total = data.reduce((acc, guest) => acc + guest.guest_number, 0);
-      setTotalGuests(total);
-      const myGuestTotal = data
-        .filter((guest) => guest.user_email === currentEmail)
-        .reduce((acc, guest) => acc + guest.guest_number, 0);
-      setMyTotalGuests(myGuestTotal);
-
-      setLoading(false);
-    } catch (error) {
-      console.log(error.response);
-      LoggingOut();
-    }
-  };
-
-  const adminEmails = ["stephanie.chinapen@gmail.com", "isaacpure@gmail.com"];
-  const adminUser = adminEmails.includes(currentEmail);
 
   useEffect(() => {
     protectedInfo();
-    allUserLists();
-  }, [guestChange]);
+
+    if (currentEmail) {
+      const allUserLists = async () => {
+        try {
+          const { data } = await fetchAllGuests();
+          data.sort((a, b) => a.guest_name.localeCompare(b.guest_name));
+          setAllGuests(data);
+          const total = data.reduce(
+            (acc, guest) => acc + guest.guest_number,
+            0
+          );
+          setTotalGuests(total);
+          const myGuestTotal = data
+            .filter((guest) => guest.user_email === currentEmail)
+            .reduce((acc, guest) => acc + guest.guest_number, 0);
+          setMyTotalGuests(myGuestTotal);
+
+          setLoading(false);
+        } catch (error) {
+          console.log(error.response);
+          LoggingOut();
+        }
+      };
+
+      allUserLists();
+    }
+  }, [currentEmail, guestChange]);
+
+  const adminEmails = ["stephanie.chinapen@gmail.com", "isaacpure@gmail.com"];
+  const adminUser = adminEmails.includes(currentEmail);
 
   return loading ? (
     <Layout>
@@ -91,7 +98,7 @@ const Dashboard = () => {
 
         <div className="d-flex justify-content-between mt-3">
           {adminUser ? <div>Total Guests: {totalGuests}</div> : null}
-          <div>{currentEmail && `Your Guests: ${myTotalGuests}`}</div>
+          <div>Your Guests: {myTotalGuests}</div>
         </div>
         <button onClick={() => LoggingOut()} className="btn btn-primary">
           Logout
