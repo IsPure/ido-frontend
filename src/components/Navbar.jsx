@@ -20,21 +20,19 @@ const Navbar = () => {
 
   return (
     <div id="mainNavigation">
-      <nav role="navigation ">
-        <div className="text-center border-bottom">
-          <div className="container" style={{ maxWidth: 500 }}>
-            <img
-              src="/images/Stephanie + Isaac-1 copy.png"
-              alt=""
-              className="invert"
-            />
-          </div>
+      <nav className="border-b">
+        <div className="max-w-5xl mx-auto px-4 py-3">
+          <img
+            src="/images/Stephanie + Isaac-1 copy.png"
+            alt=""
+            className="invert"
+          />
         </div>
       </nav>
-      <div className="navbar-expand-md">
-        <div className="navbar-dark text-center my-2">
+      <div className="flex flex-col md:flex-row items-center justify-between py-3 md:py-0">
+        <div className="text-center md:text-left">
           <button
-            className="navbar-toggler w-75 border border-light"
+            className="border border-gray-400 py-2 px-4 rounded-md"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#navbarNavDropdown"
@@ -47,10 +45,10 @@ const Navbar = () => {
           </button>
         </div>
         <div
-          className="text-center mt-3 collapse navbar-collapse"
+          className="mt-3 md:mt-0 collapse md:flex md:items-center"
           id="navbarNavDropdown"
         >
-          <ul className="navbar-nav mx-auto ">
+          <ul className="md:flex md:items-center md:ml-auto">
             <li className="nav-item">
               <NavLink to="/" className="nav-link active" aria-current="page">
                 Home

@@ -9,7 +9,7 @@ import Dashboard from "./pages/dashboard";
 import Home from "./pages/home";
 import Login from "./pages/login";
 import Register from "./pages/register";
-import "./App.css";
+import "./index.css";
 import { useSelector } from "react-redux";
 
 const App = () => {

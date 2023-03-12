@@ -79,12 +79,12 @@ const Dashboard = () => {
   ) : (
     <div>
       <Layout>
-        <div>
+        <div className="flex justify-between mt-3">
           <InputGuest
             guestChange={guestChange}
             setGuestChange={setGuestChange}
           />
-          <div className="d-flex mt-5 justify-content-around">
+          <div className="flex mt-5 justify-around">
             {adminUser ? <h2>My Guest List</h2> : <h2>All Guests List</h2>}
           </div>
           <ListGuest
@@ -96,11 +96,14 @@ const Dashboard = () => {
           />
         </div>
 
-        <div className="d-flex justify-content-between mt-3">
+        <div className="flex justify-between mt-3">
           {adminUser ? <div>Total Guests: {totalGuests}</div> : null}
           <div>Your Guests: {myTotalGuests}</div>
         </div>
-        <button onClick={() => LoggingOut()} className="btn btn-primary">
+        <button
+          onClick={() => LoggingOut()}
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
           Logout
         </button>
       </Layout>
